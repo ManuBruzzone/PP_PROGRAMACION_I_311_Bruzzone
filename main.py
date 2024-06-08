@@ -19,9 +19,9 @@ system('cls')
 bandera_ingreso = False
 while True:
     opcion = mostrar_menu()
+    system('cls')
     match opcion:
         case '1':
-            system('cls')
 
             id = crear_id(path_generador_id)
             ingresar_paciente_lista(lista_pacientes, id)
@@ -30,40 +30,34 @@ while True:
 
         case '2':
             if bandera_ingreso == True:
-                system('cls')
 
-            dni = int(input('Ingrese el DNI del paciente a modificar: '))
-            modificar_paciente(lista_pacientes, dni)
+                dni = int(input('Ingrese el DNI del paciente a modificar: '))
+                modificar_paciente(lista_pacientes, dni)
 
         case '3':
             if bandera_ingreso == True:
-                system('cls')
 
-            dni = int(input('Ingrese el DNI del paciente a Eliminar: '))
-            eliminar_paciente(lista_pacientes, dni)
+                dni = int(input('Ingrese el DNI del paciente a Eliminar: '))
+                eliminar_paciente(lista_pacientes, dni)
 
         case '4':
             if bandera_ingreso == True:
-                system('cls')
 
                 mostrar_todos_los_paciente(lista_pacientes)
 
         case '5':
             if bandera_ingreso == True:
-                system('cls')
 
                 ordenar_pacientes(lista_pacientes)
              
         case '6':
             if bandera_ingreso == True:
-                system('cls')
 
                 dni = int(input('Ingrese el DNI del paciente del cual desea informacion: ')) 
-                mostrar_un_paciente(lista_pacientes, dni)
+                buscar_paciente(lista_pacientes, dni)
 
         case '7':
             if bandera_ingreso == True:
-                system('cls')
                 
                 calcular_promedio(lista_pacientes)
 
