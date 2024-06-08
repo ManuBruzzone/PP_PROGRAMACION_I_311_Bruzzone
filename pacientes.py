@@ -103,8 +103,7 @@ def buscar_paciente(lista_pacientes: list[dict], dni:int):
             encabezado = f"{'*'*125}\n| {'Nombre':>12} | {'Apellido':>12} | {'Edad':>12} | {'Altura':>12}    | {'Peso':>12}    | {'DNI':>12} | {'Grupo Sanguineo':>25} |\n{'-'*125}"
             print(encabezado)
             mostrar_un_paciente(paciente)
-        else:
-            print(f'No existe el paciente con DNI {dni}')
+            print(f"{'-'*125}")
 
 
 def calcular_promedio(lista_pacientes: list[dict]):
@@ -254,7 +253,7 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
                     case '3':
                         nuevo_dni = get_int('Ingrese el DNI nuevo: ','Re-Ingrese el DNI nuevo: ', 4000000, 99999999, 3)
                         cambios_realizados.append(f'DNI cambiado de {paciente_temporal['dni']} a {nuevo_dni}')
-                        paciente_temporal['DNI'] = nuevo_dni
+                        paciente_temporal['dni'] = nuevo_dni
                     case '4':
                         nueva_edad = get_int('Ingrese la edad nueva: ','Re-Ingrese la edad nueva: ',1, 120, 3)
                         cambios_realizados.append(f'Edad cambiada de {paciente_temporal['edad']} a {nueva_edad}')
@@ -274,9 +273,9 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
                     case '8':
                         paciente = paciente_temporal
                         bandera_seguir = False
-                        print('\nOperacion guardada con exito!')
+                        print('Operacion guardada con exito!')
                         if cambios_realizados:
-                            print('Cambios realizados:')
+                            print('\nCambios realizados:')
                             for cambio in cambios_realizados:
                                 print(cambio)
                         else:
@@ -286,18 +285,23 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
                         bandera_seguir = False
                         print('Operacion cancelada!')
                         break
-                    case _:
-                        print('Ingrese una opcion valida!')
+        else:
+            print(f'No se encontro el paciente con DNI {dni}')
+
 
 #Delete
-def eliminar_paciente(lista_pacientes: list[dict], dni: int):
+def eliminar_paciente(lista_pacientes: list[dict], dni: int) -> bool:
     """Elimina un paciente de la lista de pacientes segun su DNI.
 
     Args:
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
         dni (int): DNI del paciente que se desea eliminar.
+
+    Return:
+        bool : Retorna True en caso de que se haya podido eliminar o False en caso de que no se haya podido eliminar.
     """
     bandera_seguir = True
+    eliminacion = False
     while bandera_seguir:
         opcion = input(f'Esta a un paso de eliminar el paciente {dni}.\nDesea continuar con la operacion? Si/No: ')
         system('cls')
@@ -310,13 +314,14 @@ def eliminar_paciente(lista_pacientes: list[dict], dni: int):
 
                 if eliminado != None:
                     lista_pacientes.remove(eliminado)
-                    print(f'El paciente con DNI {dni} fue eliminado')
+                    eliminacion = True
                     bandera_seguir = False
                     break
 
                 else:
-                    print(f'El paciente con DNI {dni} no existe')
-
+                    print(f'El paciente con DNI {dni} no existe!')
+                    bandera_seguir = False
+                    break
             case 'No':
                 bandera_seguir = False
                 break
@@ -324,3 +329,5 @@ def eliminar_paciente(lista_pacientes: list[dict], dni: int):
                 print('Ingrese una opcion valida!')
                 system('pause')
                 system('cls')
+
+    return eliminacion

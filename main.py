@@ -38,7 +38,12 @@ while True:
             if bandera_ingreso == True:
 
                 dni = int(input('Ingrese el DNI del paciente a Eliminar: '))
-                eliminar_paciente(lista_pacientes, dni)
+                eliminar = eliminar_paciente(lista_pacientes, dni)
+
+                if eliminar == True:
+                    print(f'Se a eliminado el paciente con dni {dni}')
+                else:
+                    print('No se a completado el proceso')
 
         case '4':
             if bandera_ingreso == True:
