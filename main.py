@@ -3,6 +3,11 @@ from pacientes import *
 from archivos import *
 
 def mostrar_menu():
+    """Muestra un menu de opciones al usuario y devuelve la opción seleccionada.
+
+    Returns:
+        str: La opcion seleccionada por el usuario.
+    """
     opcion = input('---MENU---\n1. Dar de alta\n2. Modificar\n3. Eliminar\n4. Mostrar todos\n5. Ordenar pacientes\n6. Buscar paciente por DNI\n7. Calcular promedio\n8. Salir\nElija una opcion: ')
     return opcion
 
@@ -41,24 +46,20 @@ while True:
             if bandera_ingreso == True:
                 system('cls')
 
-                print(f'{'*'*125}\n| {'Nombre':>12} | {'Apellido':>12} | {'Edad':>12} | {'Altura':>12}    | {'Peso':>12}    | {'DNI':>12} | {'Grupo Sanguineo':>25}|\n{'-'*125}')
                 mostrar_todos_los_paciente(lista_pacientes)
-                print(f'{'*'*125}')
 
         case '5':
             if bandera_ingreso == True:
                 system('cls')
 
                 ordenar_pacientes(lista_pacientes)
-                
+             
         case '6':
             if bandera_ingreso == True:
                 system('cls')
 
                 dni = int(input('Ingrese el DNI del paciente del cual desea informacion: ')) 
-                print(f'{'*'*125}\n| {'Nombre':>12} | {'Apellido':>12} | {'Edad':>12} | {'Altura':>12}    | {'Peso':>12}    | {'DNI':>12} | {'Grupo Sanguineo':>25}|\n{'-'*125}')
                 mostrar_un_paciente(lista_pacientes, dni)
-                print(f'{'*'*125}')
 
         case '7':
             if bandera_ingreso == True:

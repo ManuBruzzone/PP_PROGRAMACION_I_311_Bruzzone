@@ -2,7 +2,23 @@ from os import system
 from Package_Input.Input import *
 
 #Create
-def crear_paciente(id, nombre: str, apellido: str, edad: int, altura: int, peso: float, dni: int, grupo_sanguineo: str):
+def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, peso: float, dni: int, grupo_sanguineo: str) -> dict:
+    """Crea un diccionario con la información de un paciente.
+
+    Args:
+        id (int): ID unico del paciente.
+        nombre (str): Nombre del paciente.
+        apellido (str): Apellido del paciente.
+        edad (int): Edad del paciente.
+        altura (int): Altura del paciente.
+        peso (float): Peso del paciente.
+        dni (int): DNI del paciente.
+        grupo sanguineo (str): Grupo sanguineo del paciente.
+
+    Returns:
+        dict: Diccionario con la información del paciente.
+    """
+
     diccionario_paciente = {
         'id': id,
         'nombre' : nombre,
@@ -18,6 +34,15 @@ def crear_paciente(id, nombre: str, apellido: str, edad: int, altura: int, peso:
 
 
 def ingresar_paciente_lista(lista_pacientes: list,id: int):
+    """Solicita informacion del paciente al usuario y agrega el nuevo paciente a la lista.
+
+    Args:
+        lista_pacientes (list): Lista que contiene los diferentes pacientes.
+        id (int): ID unico del paciente.
+
+    En esta funcion le solicitamos al usario que ingrese los diferentes datos necesarios para poder crear un "paciente". Al mismo tiempo esos datos se validan utilizando funciones propias de validacion.
+    En caso que todos los datos sean correctos, creara el paciente utilizando la funcion "crear_paciente" y se agregara a la lista "lista_pacientes". Si algun dato falla no se agregara el paciente y se redireccionara al menu principal. 
+    """
     nombre = get_string('Ingrese el nombre: ','Re-Ingrese el nombre: ',1, 20, 3)
     system('cls')
     apellido = get_string('Ingrese el apellido: ','Re-Ingrese el apellido: ',1, 20, 3)
@@ -45,21 +70,45 @@ def ingresar_paciente_lista(lista_pacientes: list,id: int):
 
 #Read
 def mostrar_un_paciente(un_paciente: dict):
+    """Imprime los detalles de un paciente en formato de tabla.
+
+    Args:
+        un_paciente (dict): un Diccionario que contiene la información del paciente.
+    """
     print(f'| {un_paciente['nombre']:>12} | {un_paciente['apellido']:>12} | {un_paciente['edad']:>12} | {un_paciente['altura']:>12} cm | {un_paciente['peso']:>12} kg | {un_paciente['dni']:>12} | {un_paciente['grupo sanguineo']:>25} |')
 
 
-def mostrar_todos_los_paciente(lista_paciente: list[dict]):
-    for paciente in lista_paciente:
+def mostrar_todos_los_paciente(lista_pacientes: list[dict]):
+    """Imprime los detalles de todos los pacientes en formato de tabla llamando a la funcion "mostrar_un_paciente".
+
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+    """
+    encabezado = f"{'*'*125}\n| {'Nombre':>12} | {'Apellido':>12} | {'Edad':>12} | {'Altura':>12}    | {'Peso':>12}    | {'DNI':>12} | {'Grupo Sanguineo':>25} |\n{'-'*125}"
+    print(encabezado)
+    for paciente in lista_pacientes:
         mostrar_un_paciente(paciente)
+    print(f"{'-'*125}")
 
 
 def buscar_paciente(lista_pacientes: list[dict], dni:int):
-        for paciente in lista_pacientes:
-            if dni == paciente['dni']:
-                mostrar_un_paciente(paciente)
+    """Busca un paciente por su número de DNI y muestra sus detalles llamando a la funcion "mostrar_todos_los_pacientes".
+
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+        dni (int): DNI del paciente.
+    """
+    for paciente in lista_pacientes:
+        if dni == paciente['dni']:
+            mostrar_todos_los_paciente(paciente)
 
 
-def calcular_promedio(lista_pacientes):
+def calcular_promedio(lista_pacientes: list[dict]):
+    """Calcula el promedio de edad, altura o peso de los pacientes.
+
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+    """
     edad = 0
     altura = 0
     peso = 0
@@ -88,56 +137,158 @@ def calcular_promedio(lista_pacientes):
             case _:
                 print('Ingrese una opcion valida!')
             
-        calcular_promedio =  variable / cantidad_pacientes
+        calcular_promedio = variable / cantidad_pacientes
 
         print(f'{variable} promedio es: {calcular_promedio}')
 
 
-def ordenar_pacientes(lista_pacientes):
-    pass
+def ordenar_pacientes(lista_pacientes: list[dict]):
+    """Ordena la lista de pacientes según los criterios especificados por el usuario. Se le consulta al usuario sobre sus preferencias y se realiza el llamada a la funcion "burbujeo" para ordenar.
 
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+    """
+    bandera_seguir = True
+    while bandera_seguir == True:
+        opcion = input('Ordene la lista a su gusto!\nOrdenar por:\n1. Nombre\n2. Apellido\n3. Altura\n4. Grupo Sanguineo\n5. Salir\nAqui su respuesta: ')
+        match opcion:
+            case '1':
+                system('cls')
+                variable = 'nombre'
+            case '2':
+                system('cls')
+                variable = 'apellido'
+            case '2':
+                system('cls')
+                variable = 'altura'
+            case '2':
+                system('cls')
+                variable = 'grupo sanguineo'
+            case '5':
+                bandera_seguir = False
+                break
+            case _:
+                print('Ingrese una opcion valida!')
+        system('cls')
+        
+        opcion = input('Ordene la lista a su gusto!\n1. Ordenar de manera ascendente\n2. Ordenar de manera descendente\n3. atras\nAqui su respuesta: ')       
+        system('cls')
+        match opcion:
+            case '1':
+                system('cls')
+                ordenamiento = 'ascendente'
+            case '2':
+                system('cls')
+                ordenamiento = 'descendente'
+            case '3':
+                break
+            case _:
+                print('Ingrese una opcion valida!')
+        system('cls')
+        
+        lista_pacientes_temporal = lista_pacientes
+        burbujeo(lista_pacientes_temporal, variable, ordenamiento)
+        mostrar_todos_los_paciente(lista_pacientes_temporal)
+
+        opcion = input('\nAsi es como quedaria la lista con sus preferencias de ordenamiento. Desea guardar los cambios?\n1. Si\n2.No\nAqui su respuesta: ')
+        match opcion:
+            case '1':
+                system('cls')
+                lista_pacientes = lista_pacientes_temporal
+                print('Cambios guardados!')
+            case '2':
+                system('cls')
+                print('No se guardaron los cambios.')
+            case _:
+                system('cls')
+                print('Ingrese una opcion valida!')
+
+
+def burbujeo(lista: list[dict], variable: str, ordenamiento:str):
+    """Ordena una lista de diccionarios de pacientes utilizando el algoritmo de ordenamiento burbuja.
+
+    Args:
+        lista (list): Lista que contiene los diccionarios de los pacientes a ordenar.
+        variable (str): Variable por la cual se ordenarán los pacientes (por ejemplo, 'nombre', 'apellido', etc).
+        ordenamiento (str): Dirección del ordenamiento ('ascendente' o 'descendente').
+
+    Returns:
+        list: Lista de pacientes ordenada.
+    """
+
+    n = len(lista)
+
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if ordenamiento == 'ascendente':
+                if lista[j][variable] > lista[j + 1][variable]:
+                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
+            else:
+                if lista[j][variable] < lista[j + 1][variable]:
+                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
+
+    return lista
 
 #Update
 def modificar_paciente(lista_pacientes: list[dict], dni: int):
+    """Modifica los datos de un paciente en la lista de pacientes consultando con el usuario sobre sus preferencias.
+
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+        dni (int): DNI del paciente que se desea modificar.
+    """
     for paciente in lista_pacientes:
         if dni == paciente['dni']:
+            paciente_temporal = paciente
             bandera_seguir = True
             while bandera_seguir == True:
-                opcion = input('Elija el dato a modificar\n1. Nombre\n2. Apellido\n3. Dni\n4. Edad\n5. Altura\n6. Peso\n7. Grupo Sanguineo\n8. Salir\nAqui su respuesta: ')
+                opcion = input('Elija el dato a modificar\n1. Nombre\n2. Apellido\n3. Dni\n4. Edad\n5. Altura\n6. Peso\n7. Grupo Sanguineo\n\n8. Salir y guardar\n9. Salir sin guardar\nAqui su respuesta: ')
                 match opcion:
                     case '1':
-                        nuevo_nombre = get_int('Ingrese el nombre nuevo: ','Re-Ingrese el nombre nuevo: ',1, 20, 3)
-                        paciente['nombre'] = nuevo_nombre
+                        nuevo_nombre = get_string('Ingrese el nombre nuevo: ','Re-Ingrese el nombre nuevo: ',1, 20, 3)
+                        paciente_temporal['nombre'] = nuevo_nombre
                     case '2':
                         nuevo_apellido = get_string('Ingrese el apellido nuevo: ','Re-Ingrese el apellido nuevo: ',1, 20, 3)
-                        paciente['apellido'] = nuevo_apellido
+                        paciente_temporal['apellido'] = nuevo_apellido
                     case '3':
                         nuevo_dni = get_int('Ingrese el DNI nuevo: ','Re-Ingrese el DNI nuevo: ', 4000000, 99999999, 3)
-                        paciente['DNI'] = nuevo_dni
+                        paciente_temporal['DNI'] = nuevo_dni
                     case '4':
                         nueva_edad = get_int('Ingrese la edad nueva: ','Re-Ingrese la edad nueva: ',1, 120, 3)
-                        paciente['edad'] = nueva_edad
+                        paciente_temporal['edad'] = nueva_edad
                     case '5':
                         nueva_altura = get_int('Ingrese la altura nueva: ','Re-Ingrese la altura nueva: ', 30, 230, 3)
-                        paciente['altura'] = nueva_altura
+                        paciente_temporal['altura'] = nueva_altura
                     case '6':
                         nuevo_peso = get_float('Ingrese el peso nuevo: ','Re-Ingrese el peso nuevo: ', 10, 300, 3)
-                        paciente['peso'] = nuevo_peso
+                        paciente_temporal['peso'] = nuevo_peso
                     case '7':
                         nuevo_grupo_sanguineo = get_string_grupo_sanguineo('Ingrese el grupo sanguineo nuevo: ','Re-Ingrese el grupo sanguineo nuevo: ', 2, 3, 3)
-                        paciente['grupo sanguineo'] = nuevo_grupo_sanguineo
+                        paciente_temporal['grupo sanguineo'] = nuevo_grupo_sanguineo
                     case '8':
+                        paciente = paciente_temporal
+                        bandera_seguir = False
+                        print('Operacion guardada con exito!')
+                        break
+                    case '9':
                         bandera_seguir = False
                         print('Operacion cancelada!')
                         break
-                
-                continuar = input(f'Desea seguir modificando la informacion del paciente con id {paciente['id']}? (si/no)\nSu respuesta: ')
-                if continuar == 'no':
+                    case _:
+                        print('Ingrese una opcion valida!')
+
+                continuar = input(f'Desea seguir modificando la informacion del paciente con id {paciente['id']}? (Si/No)\nSu respuesta: ')
+                if continuar == 'No':
                     break
 
-
 #Delete
-def eliminar_paciente(lista_pacientes, dni):
+def eliminar_paciente(lista_pacientes: list[dict], dni: int):
+    """Elimina un paciente de la lista de pacientes segun su DNI.
+
+    Args:
+        lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
+        dni (int): DNI del paciente que se desea eliminar.
+    """
     bandera_seguir = True
     while bandera_seguir:
         opcion = input(f'Esta a un paso de eliminar el paciente {dni}.\nDesea continuar con la operacion? Si/No: ')    
@@ -151,7 +302,8 @@ def eliminar_paciente(lista_pacientes, dni):
 
                 if eliminado != None:
                     lista_pacientes.remove(eliminado)
-
             case 'No':
                 bandera_seguir = False
                 break
+            case _:
+                print('Ingrese una opcion valida!')
