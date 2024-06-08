@@ -19,6 +19,7 @@ def get_int (mensaje: str, mensaje_error: str, minimo: int, maximo:int, reintent
                 cantidad_reintentos += 1
                 if cantidad_reintentos < reintentos:
                     print(f'{mensaje_error}{cantidad_reintentos}/{reintentos}')
+                    
         except:
             cantidad_reintentos += 1
             if cantidad_reintentos < reintentos:
@@ -34,17 +35,23 @@ def get_float (mensaje: str, mensaje_error: str, minimo: int, maximo:int, reinte
     numero_flotante_final = None
 
     while cantidad_reintentos < reintentos:
-        numero = input(mensaje)
-        numero = float(numero)
+        try:
+            numero = input(mensaje)
+            numero = float(numero)
 
-        if validate_number(numero, minimo, maximo):
-            numero_flotante_final = numero
-            break
+            if validate_number(numero, minimo, maximo):
+                numero_flotante_final = numero
+                break
 
-        else:
+            else:
+                cantidad_reintentos += 1
+                if cantidad_reintentos < reintentos:
+                    print(f'{mensaje_error}{cantidad_reintentos}/{reintentos}')
+
+        except:
             cantidad_reintentos += 1
             if cantidad_reintentos < reintentos:
-                print(f'{mensaje_error}{cantidad_reintentos}/{reintentos}')
+                print(f'{mensaje_error} {cantidad_reintentos}/{reintentos}')
 
     return numero_flotante_final
 
@@ -58,18 +65,18 @@ def get_string(mensaje: str, mensaje_error: str, longitud_minima: int, longitud_
     while cantidad_reintentos < reintentos:
         cadena = input(mensaje)
 
-        if validate_length(cadena, longitud_minima, longitud_maxima):
-            cadena_final = cadena
+        if validate_len(cadena, longitud_minima, longitud_maxima) and validate_ishalpha(cadena):
+            cadena_final = cadena.capitalize()
             break
 
         else:
             cantidad_reintentos += 1
             print(f'{mensaje_error}{cantidad_reintentos}/{reintentos}')
 
-
     return cadena_final
 
-def get_string_puesto(mensaje: str, mensaje_error: str, longitud_minima: int, longitud_maxima: int, reintentos: int) -> str|None:
+
+def get_string_grupo_sanguineo(mensaje: str, mensaje_error: str, longitud_minima: int, longitud_maxima: int, reintentos: int) -> str|None:
 
     cantidad_reintentos = 0
 
@@ -78,13 +85,12 @@ def get_string_puesto(mensaje: str, mensaje_error: str, longitud_minima: int, lo
     while cantidad_reintentos < reintentos:
         cadena = input(mensaje)
 
-        if validate_length(cadena, longitud_minima, longitud_maxima) and validate_puesto(cadena):
+        if validate_len(cadena, longitud_minima, longitud_maxima) and validate_grupo_sanguineo(cadena):
             cadena_final = cadena
             break
 
         else:
             cantidad_reintentos += 1
             print(f'{mensaje_error}{cantidad_reintentos}/{reintentos}')
-
 
     return cadena_final

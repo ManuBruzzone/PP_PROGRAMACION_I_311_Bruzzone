@@ -8,23 +8,35 @@ def validate_number(numero: float, minimo: int, maximo: int) -> bool:
 
     return validacion
 
-def validate_length(cadena: str, len_minima: int, len_maxima: int) -> bool:
+
+def validate_len(cadena: str, len_minima: int, len_maxima: int) -> bool:
     
     validacion = False
 
     longitud = len(cadena)
 
-    if  longitud >= len_minima and longitud <= len_maxima and cadena.isalpha():
+    if  longitud >= len_minima and longitud <= len_maxima:
         
         validacion = True
 
     return validacion
 
-def validate_puesto(cadena: str) -> bool:
+
+def validate_ishalpha(cadena: str):
+    validacion = False
+
+    if cadena.isalpha():
+
+        validacion = True
+
+    return validacion
+
+
+def validate_grupo_sanguineo(cadena: str) -> bool:
 
     validacion = False
 
-    puestos_validos = {"Gerente", "Supervisor", "Analista", "Encargado", "Asistente"}
+    puestos_validos = {'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'}
     for puesto in puestos_validos:
         if cadena == puesto:
             validacion = True 
