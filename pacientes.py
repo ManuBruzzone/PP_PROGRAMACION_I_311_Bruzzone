@@ -337,6 +337,8 @@ def modificar_paciente(lista_pacientes: list[dict], dni: str):
                             print('\nCambios realizados:')
                             for cambio in cambios_realizados:
                                 print(cambio)
+                            break
+                                
                         else:
                             print('No se realizaron cambios.')
                         break

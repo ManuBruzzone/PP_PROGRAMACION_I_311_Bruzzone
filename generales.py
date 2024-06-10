@@ -16,10 +16,14 @@ def burbujeo(lista: list[dict], variable: str, ordenamiento:str) -> list:
         for j in range(0, m - i - 1):
             if ordenamiento == 'ascendente':
                 if lista[j][variable] > lista[j + 1][variable]:
-                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
+                    lista_temporal = lista[j]
+                    lista[j] = lista[j+1]
+                    lista[j+1] = lista_temporal
             else:
                 if lista[j][variable] < lista[j + 1][variable]:
-                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
+                    lista_temporal = lista[j]
+                    lista[j] = lista[j+1]
+                    lista[j+1] = lista_temporal
 
     return lista
 
