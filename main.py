@@ -66,7 +66,7 @@ while bandera_seguir == True:
         case '7':
             if bandera_ingreso == True:
                 
-                calcular_promedio(lista_pacientes)
+                calcular_promedio_pacientes(lista_pacientes)
 
         case '8':
             bandera_seguir = False

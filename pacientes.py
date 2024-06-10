@@ -1,5 +1,6 @@
 from os import system
 from Package_Input.Input import *
+from generales import *
 
 def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, peso: float, dni: str, grupo_sanguineo: str) -> dict:
     """Crea un diccionario con la información de un paciente.
@@ -117,7 +118,7 @@ def buscar_paciente(lista_pacientes: list[dict], dni:str):
             print(f'No se existe el paciente con DNI {dni}')
 
 
-def calcular_promedio(lista_pacientes: list[dict]):
+def calcular_promedio_pacientes(lista_pacientes: list[dict]):
     """Calcula el promedio de edad, altura o peso de los pacientes.
 
     Args:
@@ -140,13 +141,13 @@ def calcular_promedio(lista_pacientes: list[dict]):
         match opcion:
             case '1':
                 variable = edad
-                mensaje = 'La edad'
+                mensaje = 'edad'
             case '2':
                 variable = altura
-                mensaje = 'La altura'
+                mensaje = 'altura'
             case '3':
                 variable = peso
-                mensaje = 'El peso'
+                mensaje = 'peso'
             case '4':
                 bandera_seguir = False
                 break
@@ -156,9 +157,9 @@ def calcular_promedio(lista_pacientes: list[dict]):
         if variable == None:
             break
 
-        calcular_promedio = variable / cantidad_pacientes
+        promedio = calcular_promedio(variable, cantidad_pacientes)
 
-        print(f'{mensaje} es promedio es: {calcular_promedio}')
+        print(f'El promedio de {mensaje} es de: {promedio}')
         system('pause')
         system('cls')
 
@@ -233,31 +234,6 @@ def ordenar_pacientes(lista_pacientes: list[dict]):
         system('pause')
         system('cls')
 
-
-def burbujeo(lista: list[dict], variable: str, ordenamiento:str) -> list:
-    """Ordena una lista de diccionarios de pacientes utilizando el algoritmo de ordenamiento burbuja.
-
-    Args:
-        lista (list): Lista que contiene los diccionarios de los pacientes a ordenar.
-        variable (str): Variable por la cual se ordenarán los pacientes (por ejemplo, 'nombre', 'apellido', etc).
-        ordenamiento (str): Dirección del ordenamiento ('ascendente' o 'descendente').
-
-    Returns:
-        list: Lista de pacientes ordenada.
-    """
-
-    m = len(lista)
-
-    for i in range(m):
-        for j in range(0, m - i - 1):
-            if ordenamiento == 'ascendente':
-                if lista[j][variable] > lista[j + 1][variable]:
-                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
-            else:
-                if lista[j][variable] < lista[j + 1][variable]:
-                    lista[j], lista[j + 1] = lista[j + 1], lista[j]
-
-    return lista
 
 
 def modificar_paciente(lista_pacientes: list[dict], dni: str):
