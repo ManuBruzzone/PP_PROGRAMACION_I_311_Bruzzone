@@ -35,6 +35,6 @@ def calcular_promedio(variable: int|float, cantidad_calcular: int) -> float:
         float: Promedio final
     """
 
-    calcular_promedio = variable / cantidad_calcular
+    promedio = variable / cantidad_calcular
 
-    return calcular_promedio
+    return promedio
