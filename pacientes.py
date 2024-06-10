@@ -124,6 +124,7 @@ def calcular_promedio(lista_pacientes: list[dict]):
 
     bandera_seguir = True
     while bandera_seguir == True:
+        variable = None
         opcion = input('Elija el dato sobre el cual desea saber el promedio.\n1. Edad\n2. altura\n3. Peso\n4. Salir\nAqui su respuesta: ')
         system('cls')
         match opcion:
@@ -139,6 +140,11 @@ def calcular_promedio(lista_pacientes: list[dict]):
             case '4':
                 bandera_seguir = False
                 break
+            case _:
+                print('Ingrese una opcion valida la proxima!')
+
+        if variable == None:
+            break
 
         calcular_promedio = variable / cantidad_pacientes
 
