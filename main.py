@@ -8,12 +8,13 @@ def mostrar_menu():
     Returns:
         str: La opcion seleccionada por el usuario.
     """
-    opcion = input('---MENU---\n1. Dar de alta\n2. Modificar\n3. Eliminar\n4. Mostrar todos\n5. Ordenar pacientes\n6. Buscar paciente por DNI\n7. Calcular promedio\n8. Salir\nElija una opcion: ')
+    opcion = input('---MENU---\n1. Dar de alta\n2. Modificar\n3. Eliminar\n4. Mostrar todos\n5. Ordenar pacientes\n6. Buscar paciente por DNI\n7. Calcular promedio\n8. Determinar compartibilidad\n9. Salir\nElija una opcion: ')
     return opcion
 
-path_generador_id = './Generador_ID'
+path_generador_id = './Generador_ID.txt'
+path_pacientes = './pacientes.csv'
 
-lista_pacientes = []
+lista_pacientes = cargar_lista(path_pacientes)
 
 system('cls')
 bandera_ingreso = False
@@ -24,7 +25,7 @@ while bandera_seguir == True:
     match opcion:
         case '1':
 
-            id = crear_id(path_generador_id)
+            id = crear_id(path_generador_id, lista_pacientes)
             ingreso_paciente = ingresar_paciente_lista(lista_pacientes, id)
 
             if ingreso_paciente == True:
@@ -69,6 +70,14 @@ while bandera_seguir == True:
                 calcular_promedio_pacientes(lista_pacientes)
 
         case '8':
+            if bandera_ingreso == True:
+                
+                determinar_compartabilidad(lista_pacientes)
+
+        case '9':
+            guardar = guardar_lista(path_pacientes, lista_pacientes)
+            if guardar == True:
+                print('Guardando y saliendo...')
             bandera_seguir = False
             break
 

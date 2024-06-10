@@ -167,6 +167,69 @@ def calcular_promedio_pacientes(lista_pacientes: list[dict]):
         system('cls')
 
 
+def determinar_compartabilidad(lista_pacientes: list):
+    """Determina la compartabilidad de la sangre de cierta paciente especifico con respecto al resto de pacientes y tipos de sangre.
+
+    Args:
+        lista_pacientes (list): Lista de los pacientes
+    """
+    dni = input('Ingrese el dni del paciente: ')
+
+    encontro = False
+    for paciente in lista_pacientes:
+        if dni == paciente['dni']:
+            sangre_paciente = paciente['grupo sanguineo']
+            encontro = True
+            recibe = ''
+            match paciente['grupo sanguineo']:
+                case 'A+':
+                    envia = ['A+', 'AB+']
+                    recibe = '0-\nO+\nA+\nA-'
+                case 'A-':
+                    envia = ['A+', 'A-', 'AB+', 'AB-']
+                    recibe = '0- | A-'
+                case 'B+':
+                    envia = ['B+', 'AB+']
+                    recibe = '0+ | 0- | B+ | B-'
+                case 'B-':
+                    envia = ['B+', 'B-', 'AB+', 'AB-']
+                    recibe = '0- | B-'
+                case 'AB+':
+                    envia = ['AB+']
+                    recibe = 'TODOS'
+                case 'AB-':
+                    envia = ['AB+', 'AB-']
+                    recibe = 'AB- | 0- | A- | B-'
+                case '0+':
+                    envia = ['A+', 'B+', 'AB+', '0+']
+                    recibe = '0+ | 0-'
+                case '0-':
+                    envia = ('TODOS')
+                    recibe = '0-'
+            
+            print(f'El paciente puede recibir sangre de los siguientes grupos sanguineos:\n{recibe}\n\nA continuacion le mostraremos la lista sobre los pacientes a los que pueden donarle el paciente {paciente['nombre']}')
+            system('pause')
+            system('cls')
+
+            pacientes_a_donar = []
+            for paciente in lista_pacientes:
+                if sangre_paciente == '0-':
+                    pacientes_a_donar.append(paciente)
+                elif paciente['grupo sanguineo'] in envia:
+                    pacientes_a_donar.append(paciente)
+
+            if pacientes_a_donar:
+                burbujeo(pacientes_a_donar, 'dni', 'ascendente')
+
+                print(f'El paciente puede donar a los siguientes pacientes:')
+                mostrar_todos_los_paciente(pacientes_a_donar)   
+            else:
+                print('No hay pacientes a los que pueda donar')
+    
+    if encontro == False:
+        print(f'No se existe el paciente con DNI {dni}')
+
+
 def ordenar_pacientes(lista_pacientes: list[dict]):
     """Ordena la lista de pacientes según los criterios especificados por el usuario. Se le consulta al usuario sobre sus preferencias y se realiza el llamada a la funcion "burbujeo" para ordenar.
 
