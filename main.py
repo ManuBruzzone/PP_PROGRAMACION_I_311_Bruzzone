@@ -17,16 +17,18 @@ lista_pacientes = []
 
 system('cls')
 bandera_ingreso = False
-while True:
+bandera_seguir = True
+while bandera_seguir == True:
     opcion = mostrar_menu()
     system('cls')
     match opcion:
         case '1':
 
             id = crear_id(path_generador_id)
-            ingresar_paciente_lista(lista_pacientes, id)
+            ingreso_paciente = ingresar_paciente_lista(lista_pacientes, id)
 
-            bandera_ingreso = True
+            if ingreso_paciente == True:
+                bandera_ingreso = True
 
         case '2':
             if bandera_ingreso == True:
@@ -67,6 +69,7 @@ while True:
                 calcular_promedio(lista_pacientes)
 
         case '8':
+            bandera_seguir = False
             break
 
     system('pause')

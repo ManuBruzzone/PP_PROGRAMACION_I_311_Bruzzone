@@ -32,15 +32,18 @@ def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, 
     return diccionario_paciente
 
 
-def ingresar_paciente_lista(lista_pacientes: list,id: int):
+def ingresar_paciente_lista(lista_pacientes: list,id: int) -> bool:
     """Solicita informacion del paciente al usuario y agrega el nuevo paciente a la lista.
+    En esta funcion le solicitamos al usario que ingrese los diferentes datos necesarios para poder crear un "paciente". Al mismo tiempo esos datos se validan utilizando funciones propias de validacion.
+    En caso que todos los datos sean correctos, creara el paciente utilizando la funcion "crear_paciente" y se agregara a la lista "lista_pacientes". Si algun dato falla no se agregara el paciente y se redireccionara al menu principal. 
+    
 
     Args:
         lista_pacientes (list): Lista que contiene los diferentes pacientes.
         id (int): ID unico del paciente.
 
-    En esta funcion le solicitamos al usario que ingrese los diferentes datos necesarios para poder crear un "paciente". Al mismo tiempo esos datos se validan utilizando funciones propias de validacion.
-    En caso que todos los datos sean correctos, creara el paciente utilizando la funcion "crear_paciente" y se agregara a la lista "lista_pacientes". Si algun dato falla no se agregara el paciente y se redireccionara al menu principal. 
+    Returns:
+        bool : En caso de completarse exitosamente el ingreso de paciente retornara True, caso contrario retornara False.
     """
     nombre = get_string('Ingrese el nombre: ','Re-Ingrese el nombre: ',1, 20, 3)
     system('cls')
@@ -54,7 +57,7 @@ def ingresar_paciente_lista(lista_pacientes: list,id: int):
     system('cls')
     dni = get_int('Ingrese el DNI: ','Re-Ingrese el DNI: ', 4000000, 99999999, 3)
     system('cls')
-    grupo_sanguineo = get_string_grupo_sanguineo('Ingrese el grupo sanguineo ( A(-\+) \ B(-\+) \ AB(-\+) \ 0(-\+) ): ','Re-Ingrese el grupo sanguineo: ', 2, 3, 3)
+    grupo_sanguineo = get_string_grupo_sanguineo('Ingrese el grupo sanguineo ( A(-\+) | B(-\+) | AB(-\+) | 0(-\+) ): ','Re-Ingrese el grupo sanguineo: ', 2, 3, 3)
     system('cls')
     
     if nombre != None and apellido != None and edad != None and altura != None and peso != None and dni != None and grupo_sanguineo != None:
@@ -63,9 +66,15 @@ def ingresar_paciente_lista(lista_pacientes: list,id: int):
 
         lista_pacientes.append(diccionario_pacientes)
 
+        ingreso_paciente = True
+
         print(f'Se creo correctamente el paciente con DNI: {dni}\n\nDATOS CARGADOS:\nNombre: {nombre}\nApellido: {apellido}\nEdad: {edad}\nAltura: {altura}\nPeso: {peso}\nDNI: {dni}\nGrupo Sanguineo: {grupo_sanguineo}')
     else:
         print('No se pudo cargar el paciente: uno o más datos no son válidos.\nSi desea volver a intentar re ingrese la opcion "1" en el menu principal')
+
+        ingreso_paciente = False
+
+    return ingreso_paciente
 
 
 def mostrar_un_paciente(un_paciente: dict):
@@ -224,7 +233,7 @@ def ordenar_pacientes(lista_pacientes: list[dict]):
         system('cls')
 
 
-def burbujeo(lista: list[dict], variable: str, ordenamiento:str):
+def burbujeo(lista: list[dict], variable: str, ordenamiento:str) -> list:
     """Ordena una lista de diccionarios de pacientes utilizando el algoritmo de ordenamiento burbuja.
 
     Args:
@@ -277,8 +286,6 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
                         paciente_temporal['apellido'] = nuevo_apellido
                     case '3':
                         nuevo_dni = get_int('Ingrese el DNI nuevo: ','Re-Ingrese el DNI nuevo: ', 4000000, 99999999, 3)
-                        dni_str = str(nuevo_dni).zfill(8)
-                        nuevo_dni = int(dni_str)
                         cambios_realizados.append(f'DNI cambiado de {paciente_temporal['dni']} a {nuevo_dni}')
                         paciente_temporal['dni'] = nuevo_dni
                     case '4':

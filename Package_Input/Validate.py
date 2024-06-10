@@ -30,6 +30,7 @@ def validate_len(cadena: str, len_minima: int, len_maxima: int) -> bool:
     Returns:
         bool: True si la longitud de la cadena está dentro de los límites, False en caso contrario.
     """
+    
     validacion = False
 
     longitud = len(cadena)
@@ -50,6 +51,7 @@ def validate_grupo_sanguineo(cadena: str) -> bool:
     Returns:
         bool: True si la cadena corresponde a un grupo sanguineo válido, False en caso contrario.
     """
+    
     validacion = False
 
     puestos_validos = {'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'}
