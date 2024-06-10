@@ -69,9 +69,5 @@ while True:
         case '8':
             break
 
-        case _:
-            system('cls')
-            print('Ingrese una opcion valida!')
-
     system('pause')
     system('cls')

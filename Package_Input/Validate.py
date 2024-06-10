@@ -52,7 +52,7 @@ def validate_grupo_sanguineo(cadena: str) -> bool:
     """
     validacion = False
 
-    puestos_validos = {'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'}
+    puestos_validos = {'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'}
     for puesto in puestos_validos:
         if cadena == puesto:
             validacion = True 

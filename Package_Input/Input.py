@@ -133,6 +133,7 @@ def get_string_grupo_sanguineo(mensaje: str, mensaje_error: str, longitud_minima
 
     while cantidad_reintentos < reintentos:
         cadena = input(mensaje).strip()
+        cadena = cadena.capitalize()
 
         if validate_len(cadena, longitud_minima, longitud_maxima) and validate_grupo_sanguineo(cadena):
             cadena_final = cadena
