@@ -108,14 +108,17 @@ def buscar_paciente(lista_pacientes: list[dict], dni:str):
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
         dni (str): DNI del paciente.
     """
+    encontro = False
     for paciente in lista_pacientes:
         if dni == paciente['dni']:
             encabezado = f"{'*'*125}\n| {'Nombre':>12} | {'Apellido':>12} | {'Edad':>12} | {'Altura':>12}    | {'Peso':>12}    | {'DNI':>12} | {'Grupo Sanguineo':>25} |\n{'-'*125}"
             print(encabezado)
             mostrar_un_paciente(paciente)
             print(f"{'*'*125}")
-        else:
-            print(f'No se existe el paciente con DNI {dni}')
+            encontro = True
+
+    if encontro == False:
+        print(f'No se existe el paciente con DNI {dni}')
 
 
 def calcular_promedio_pacientes(lista_pacientes: list[dict]):
@@ -171,7 +174,6 @@ def ordenar_pacientes(lista_pacientes: list[dict]):
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
     """
     bandera_seguir = True
-    lista_pacientes_temporal = []
     while bandera_seguir == True:
         variable_valida = False
         while variable_valida == False:
@@ -218,22 +220,12 @@ def ordenar_pacientes(lista_pacientes: list[dict]):
                     system('pause')
                     system('cls')
         
-        lista_pacientes_temporal = lista_pacientes
-        burbujeo(lista_pacientes_temporal, variable, ordenamiento)
-        mostrar_todos_los_paciente(lista_pacientes_temporal)
+        burbujeo(lista_pacientes, variable, ordenamiento)
+        mostrar_todos_los_paciente(lista_pacientes)
 
-        opcion = input(f'\nAsi es como quedaria la lista ordenandola por {variable} de manera {ordenamiento}. Desea guardar los cambios?\n1. Si\n2. No\nAqui su respuesta: ')
-        system('cls')
-        match opcion:
-            case '1':
-                lista_pacientes = lista_pacientes_temporal
-                print('Cambios guardados!')
-            case '2':
-                print('No se guardaron los cambios.')
-
+        print(f'\nAsi es como quedo la lista ordenandola por {variable} de manera {ordenamiento}.')
         system('pause')
         system('cls')
-
 
 
 def modificar_paciente(lista_pacientes: list[dict], dni: str):
@@ -243,8 +235,10 @@ def modificar_paciente(lista_pacientes: list[dict], dni: str):
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
         dni (str): DNI del paciente que se desea modificar.
     """
+    encontro = False
     for paciente in lista_pacientes:
         if dni == paciente['dni']:
+            encontro = True
             original_nombre = paciente['nombre']
             original_apellido = paciente['apellido']
             original_dni = paciente['dni']
@@ -355,8 +349,8 @@ def modificar_paciente(lista_pacientes: list[dict], dni: str):
                         print('Operacion cancelada!')
                         break
 
-        else:
-            print(f'No se encontro el paciente con DNI {dni}')
+    if encontro == False:
+        print(f'No se encontro el paciente con DNI {dni}')
 
 
 def eliminar_paciente(lista_pacientes: list[dict], dni: str) -> bool:
