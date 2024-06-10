@@ -1,7 +1,7 @@
 from os import system
 from Package_Input.Input import *
 
-def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, peso: float, dni: int, grupo_sanguineo: str) -> dict:
+def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, peso: float, dni: str, grupo_sanguineo: str) -> dict:
     """Crea un diccionario con la información de un paciente.
 
     Args:
@@ -11,7 +11,7 @@ def crear_paciente(id: int, nombre: str, apellido: str, edad: int, altura: int, 
         edad (int): Edad del paciente.
         altura (int): Altura del paciente.
         peso (float): Peso del paciente.
-        dni (int): DNI del paciente.
+        dni (str): DNI del paciente.
         grupo sanguineo (str): Grupo sanguineo del paciente.
 
     Returns:
@@ -56,6 +56,7 @@ def ingresar_paciente_lista(lista_pacientes: list,id: int) -> bool:
     peso = get_float('Ingrese el peso: ','Re-Ingrese el peso: ', 10, 300, 3)
     system('cls')
     dni = get_int('Ingrese el DNI: ','Re-Ingrese el DNI: ', 4000000, 99999999, 3)
+    dni = str(dni).zfill(8)
     system('cls')
     grupo_sanguineo = get_string_grupo_sanguineo('Ingrese el grupo sanguineo ( A(-\+) | B(-\+) | AB(-\+) | 0(-\+) ): ','Re-Ingrese el grupo sanguineo: ', 2, 3, 3)
     system('cls')
@@ -99,12 +100,12 @@ def mostrar_todos_los_paciente(lista_pacientes: list[dict]):
     print(f"{'*'*125}")
 
 
-def buscar_paciente(lista_pacientes: list[dict], dni:int):
+def buscar_paciente(lista_pacientes: list[dict], dni:str):
     """Busca un paciente por su número de DNI y muestra sus detalles llamando a la funcion "mostrar_un_pacientes".
 
     Args:
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
-        dni (int): DNI del paciente.
+        dni (str): DNI del paciente.
     """
     for paciente in lista_pacientes:
         if dni == paciente['dni']:
@@ -245,10 +246,10 @@ def burbujeo(lista: list[dict], variable: str, ordenamiento:str) -> list:
         list: Lista de pacientes ordenada.
     """
 
-    n = len(lista)
+    m = len(lista)
 
-    for i in range(n):
-        for j in range(0, n - i - 1):
+    for i in range(m):
+        for j in range(0, m - i - 1):
             if ordenamiento == 'ascendente':
                 if lista[j][variable] > lista[j + 1][variable]:
                     lista[j], lista[j + 1] = lista[j + 1], lista[j]
@@ -259,53 +260,101 @@ def burbujeo(lista: list[dict], variable: str, ordenamiento:str) -> list:
     return lista
 
 
-def modificar_paciente(lista_pacientes: list[dict], dni: int):
+def modificar_paciente(lista_pacientes: list[dict], dni: str):
     """Modifica los datos de un paciente en la lista de pacientes consultando con el usuario sobre sus preferencias.
 
     Args:
         lista_pacientes (list[dict]): Lista que contiene los diccionarios de los pacientes.
-        dni (int): DNI del paciente que se desea modificar.
+        dni (str): DNI del paciente que se desea modificar.
     """
     for paciente in lista_pacientes:
         if dni == paciente['dni']:
-            paciente_temporal = paciente
+            original_nombre = paciente['nombre']
+            original_apellido = paciente['apellido']
+            original_dni = paciente['dni']
+            original_edad = paciente['edad']
+            original_altura = paciente['altura']
+            original_peso = paciente['peso']
+            original_grupo_sanguineo = paciente['grupo sanguineo']
             cambios_realizados = []
             bandera_seguir = True
             while bandera_seguir == True:
                 system('cls')
-                opcion = input('Elija el dato a modificar\n1. Nombre\n2. Apellido\n3. Dni\n4. Edad\n5. Altura\n6. Peso\n7. Grupo Sanguineo\n\n8. Salir y guardar\n9. Salir sin guardar\nAqui su respuesta: ')
+                opcion = input('Elija el dato a modificar\n1. Nombre\n2. Apellido\n3. Dni\n4. Edad\n5. Altura\n6. Peso\n7. Grupo Sanguineo\n\n8. SALIR Y GUARDAR\n9. SALIR SIN GUARDAR\nAqui su respuesta: ')
                 system('cls')
                 match opcion:
                     case '1':
                         nuevo_nombre = get_string('Ingrese el nombre nuevo: ','Re-Ingrese el nombre nuevo: ',1, 20, 3)
-                        cambios_realizados.append(f'Nombre cambiado de {paciente_temporal['nombre']} a {nuevo_nombre}')
-                        paciente_temporal['nombre'] = nuevo_nombre
+                        if nuevo_nombre != None:
+                            cambios_realizados.append(f'Nombre cambiado de {paciente['nombre']} a {nuevo_nombre}')
+                            paciente['nombre'] = nuevo_nombre
+                        else:
+                            system('cls')
+                            print('El nombre ingresado no es valido!')
+                            system('pause')
+
                     case '2':
                         nuevo_apellido = get_string('Ingrese el apellido nuevo: ','Re-Ingrese el apellido nuevo: ',1, 20, 3)
-                        cambios_realizados.append(f'Apellido cambiado de {paciente_temporal['apellido']} a {nuevo_apellido}')
-                        paciente_temporal['apellido'] = nuevo_apellido
+                        if nuevo_apellido != None:
+                            cambios_realizados.append(f'Apellido cambiado de {paciente['apellido']} a {nuevo_apellido}')
+                            paciente['apellido'] = nuevo_apellido
+                        else:
+                            system('cls')
+                            print('El apellido ingresado no es valido!')
+                            system('pause')
+
                     case '3':
                         nuevo_dni = get_int('Ingrese el DNI nuevo: ','Re-Ingrese el DNI nuevo: ', 4000000, 99999999, 3)
-                        cambios_realizados.append(f'DNI cambiado de {paciente_temporal['dni']} a {nuevo_dni}')
-                        paciente_temporal['dni'] = nuevo_dni
+                        if nuevo_dni:
+                            nuevo_dni = str(nuevo_dni).zfill(8)
+                            cambios_realizados.append(f'DNI cambiado de {paciente['dni']} a {nuevo_dni}')
+                            paciente['dni'] = nuevo_dni
+                        else:
+                            system('cls')
+                            print('El DNI ingresado no es valido!')
+                            system('pause')
+
                     case '4':
                         nueva_edad = get_int('Ingrese la edad nueva: ','Re-Ingrese la edad nueva: ',1, 120, 3)
-                        cambios_realizados.append(f'Edad cambiada de {paciente_temporal['edad']} a {nueva_edad}')
-                        paciente_temporal['edad'] = nueva_edad
+                        if nueva_edad != None:                            
+                            cambios_realizados.append(f'Edad cambiada de {paciente['edad']} a {nueva_edad}')
+                            paciente['edad'] = nueva_edad
+                        else:
+                            system('cls')
+                            print('La edad ingresada no es valida!')
+                            system('pause')
+
                     case '5':
                         nueva_altura = get_int('Ingrese la altura nueva: ','Re-Ingrese la altura nueva: ', 30, 230, 3)
-                        cambios_realizados.append(f'Altura cambiada de {paciente_temporal['altura']} a {nueva_altura}')
-                        paciente_temporal['altura'] = nueva_altura
+                        if nueva_altura != None:
+                            cambios_realizados.append(f'Altura cambiada de {paciente['altura']} a {nueva_altura}')
+                            paciente['altura'] = nueva_altura
+                        else:
+                            system('cls')
+                            print('La altura ingresada no es valida!')
+                            system('pause')
+
                     case '6':
                         nuevo_peso = get_float('Ingrese el peso nuevo: ','Re-Ingrese el peso nuevo: ', 10, 300, 3)
-                        cambios_realizados.append(f'Peso cambiado de {paciente_temporal['peso']} a {nuevo_peso}')
-                        paciente_temporal['peso'] = nuevo_peso
+                        if nuevo_peso != None:
+                            cambios_realizados.append(f'Peso cambiado de {paciente['peso']} a {nuevo_peso}')
+                            paciente['peso'] = nuevo_peso
+                        else:
+                            system('cls')
+                            print('El peso ingresado no es valido!')
+                            system('pause')
+
                     case '7':
                         nuevo_grupo_sanguineo = get_string_grupo_sanguineo('Ingrese el grupo sanguineo nuevo: ','Re-Ingrese el grupo sanguineo nuevo: ', 2, 3, 3)
-                        cambios_realizados.append(f'Grupo sanguineo cambiado de {paciente_temporal['grupo sanguineo']} a {nuevo_grupo_sanguineo}')
-                        paciente_temporal['grupo sanguineo'] = nuevo_grupo_sanguineo
+                        if nuevo_grupo_sanguineo != None:
+                            cambios_realizados.append(f'Grupo sanguineo cambiado de {paciente['grupo sanguineo']} a {nuevo_grupo_sanguineo}')
+                            paciente['grupo sanguineo'] = nuevo_grupo_sanguineo
+                        else:
+                            system('cls')
+                            print('El grupo sanguineo ingresado no es valido!')
+                            system('pause')
+
                     case '8':
-                        paciente = paciente_temporal
                         bandera_seguir = False
                         print('Operacion guardada con exito!')
                         if cambios_realizados:
@@ -315,7 +364,15 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
                         else:
                             print('No se realizaron cambios.')
                         break
+
                     case '9':
+                        paciente['nombre'] = original_nombre
+                        paciente['apellido'] = original_apellido
+                        paciente['dni'] = original_dni
+                        paciente['edad'] = original_edad
+                        paciente['altura'] = original_altura
+                        paciente['peso'] = original_peso
+                        paciente['grupo sanguineo'] = original_grupo_sanguineo
                         bandera_seguir = False
                         print('Operacion cancelada!')
                         break
@@ -324,7 +381,7 @@ def modificar_paciente(lista_pacientes: list[dict], dni: int):
             print(f'No se encontro el paciente con DNI {dni}')
 
 
-def eliminar_paciente(lista_pacientes: list[dict], dni: int) -> bool:
+def eliminar_paciente(lista_pacientes: list[dict], dni: str) -> bool:
     """Elimina un paciente de la lista de pacientes segun su DNI.
 
     Args:

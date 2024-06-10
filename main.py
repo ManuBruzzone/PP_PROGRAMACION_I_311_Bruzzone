@@ -33,13 +33,13 @@ while bandera_seguir == True:
         case '2':
             if bandera_ingreso == True:
 
-                dni = int(input('Ingrese el DNI del paciente a modificar: '))
+                dni = input('Ingrese el DNI del paciente a modificar: ')
                 modificar_paciente(lista_pacientes, dni)
 
         case '3':
             if bandera_ingreso == True:
 
-                dni = int(input('Ingrese el DNI del paciente a Eliminar: '))
+                dni = input('Ingrese el DNI del paciente a Eliminar: ')
                 eliminar = eliminar_paciente(lista_pacientes, dni)
 
                 if eliminar == True:
@@ -60,7 +60,7 @@ while bandera_seguir == True:
         case '6':
             if bandera_ingreso == True:
 
-                dni = int(input('Ingrese el DNI del paciente del cual desea informacion: ')) 
+                dni = input('Ingrese el DNI del paciente del cual desea informacion: ')
                 buscar_paciente(lista_pacientes, dni)
 
         case '7':
