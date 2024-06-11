@@ -187,22 +187,22 @@ def determinar_compartabilidad(lista_pacientes: list):
                     recibe = '0-\nO+\nA+\nA-'
                 case 'A-':
                     envia = ['A+', 'A-', 'AB+', 'AB-']
-                    recibe = '0- | A-'
+                    recibe = '0-\nA-'
                 case 'B+':
                     envia = ['B+', 'AB+']
-                    recibe = '0+ | 0- | B+ | B-'
+                    recibe = '0+\n0-\nB+\nB-'
                 case 'B-':
                     envia = ['B+', 'B-', 'AB+', 'AB-']
-                    recibe = '0- | B-'
+                    recibe = '0-\nB-'
                 case 'AB+':
                     envia = ['AB+']
                     recibe = 'TODOS'
                 case 'AB-':
                     envia = ['AB+', 'AB-']
-                    recibe = 'AB- | 0- | A- | B-'
+                    recibe = 'AB-\n0-\nA-\nB-'
                 case '0+':
                     envia = ['A+', 'B+', 'AB+', '0+']
-                    recibe = '0+ | 0-'
+                    recibe = '0+\n0-'
                 case '0-':
                     envia = ('TODOS')
                     recibe = '0-'
